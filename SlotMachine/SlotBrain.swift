@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class SlotBrain {
     
@@ -34,7 +35,7 @@ class SlotBrain {
         return slotsInRows
     }
     
-    class func computeWinnings(slots:[[Slot]]) -> Int {
+    class func computeWinnings(slots:[[Slot]]) -> [Int] {
         var slotsInRows = unpactSlotsIntoSlotsRows(slots)
         var winnings = 0
 
@@ -78,7 +79,7 @@ class SlotBrain {
             winnings += 50
         }
         
-        return winnings
+        return [winnings, flushWinCount, threeOfAKindWinCount, straighWinCount]
     }
     
     class func checkFlush (slotRow:[Slot]) -> Bool {
@@ -121,4 +122,5 @@ class SlotBrain {
             return false
         }
     }
+
 }

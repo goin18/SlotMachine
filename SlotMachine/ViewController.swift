@@ -94,7 +94,7 @@ class ViewController: UIViewController {
         if credits <= 5 {
             showAlertWithText(header: "Not Enought Credits", message: "Bet Less")
         }else{
-            if currentBet <= 5 {
+            if currentBet < 5 {
                 var creditsToBetMax = 5 - currentBet
                 credits -= creditsToBetMax
                 currentBet += creditsToBetMax
@@ -111,9 +111,16 @@ class ViewController: UIViewController {
         setupSecondContainer(secondContainer)
         
         var winningsMultiplier = SlotBrain.computeWinnings(slots)
-        winnings = winningsMultiplier * currentBet
+        
+        
+        winnings = winningsMultiplier[0] * currentBet
+        if winningsMultiplier[1] != 0 || winningsMultiplier[1] != 0 || winningsMultiplier[1] != 0 {
+            alertWinnings(winningsMultiplier[1], threeOfAKindWinCount: winningsMultiplier[2], straighWinCount: winningsMultiplier[3])
+        }
         credits += winnings
         currentBet = 0
+        
+        
         updateMainView()
     }
     
@@ -317,6 +324,17 @@ class ViewController: UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
         //to pa zato da se dejansko predstavi
         
+    }
+    
+    //Helper Function
+    func alertWinnings(flushCount: Int, threeOfAKindWinCount: Int, straighWinCount: Int) {
+        
+        let message = "Flush: \(flushCount), Three in a row: \(threeOfAKindWinCount), Three of a Kind: \(straighWinCount)"
+        let alertController = UIAlertController(title: "Winnings", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+        alertController.addAction(alertAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
 
 }
