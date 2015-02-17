@@ -20,7 +20,7 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>8B004BF51FC57624D247FD9FB78D2D056D74FAE3</key>
-		<string>../..SlotMachine/</string>
+		<string>../..SlotMachine</string>
 		<key>DD0244E55A0470C7C497C54F769FECBB7F3E06CF</key>
 		<string>../..</string>
 	</dict>
@@ -46,7 +46,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>8B004BF51FC57624D247FD9FB78D2D056D74FAE3</string>
 			<key>IDESourceControlWCCName</key>
-			<string>SlotMachine</string>
+			<string>SlotMachineSlotMachine</string>
 		</dict>
 	</array>
 </dict>

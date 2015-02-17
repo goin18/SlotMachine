@@ -80,11 +80,11 @@ class ViewController: UIViewController {
         if credits <= 0 {
             showAlertWithText(header: "No more Credits", message: "Reset Game")
         }else {
-            if currentBet <= 5 {
+            if currentBet <= 4 {
                 currentBet += 1
                 credits -= 1
                 updateMainView()
-            }else{
+            }else {
                 showAlertWithText(message: "You can only bet 5 credits at a time")
             }
         }
@@ -98,30 +98,36 @@ class ViewController: UIViewController {
                 var creditsToBetMax = 5 - currentBet
                 credits -= creditsToBetMax
                 currentBet += creditsToBetMax
-                updateMainView()
             }else{
                 showAlertWithText(message: "You can only bet 5 credits at the time!")
             }
         }
+         updateMainView()
     }
     
     func spinButtonPressed(button: UIButton){
-        removeSlotImageViews()
-        slots = Factory.createSlots()
-        setupSecondContainer(secondContainer)
         
-        var winningsMultiplier = SlotBrain.computeWinnings(slots)
+        if currentBet > 0 {
+            removeSlotImageViews()
+            slots = Factory.createSlots()
+            setupSecondContainer(secondContainer)
+            
+            var winningsMultiplier = SlotBrain.computeWinnings(slots)
+            
+            
+            winnings = winningsMultiplier[0] * currentBet
+            if winningsMultiplier[1] != 0 || winningsMultiplier[1] != 0 || winningsMultiplier[1] != 0 {
+                var message = "Flush: \(winningsMultiplier[1]), Three in a row: \(winningsMultiplier[2]), Three of a Kind: \(winningsMultiplier[3])\n Recived credits: \(winnings) \nOldCredits: \(credits) NewCredits: \(credits + winnings)"
+                message += ""
+                showAlertWithText(header: "Winnings", message: message)
+            }
+            credits += winnings
+            currentBet = 0
+        }else {
+            showAlertWithText(message: "Current Bet is 0, please but something.")
         
-        
-        winnings = winningsMultiplier[0] * currentBet
-        if winningsMultiplier[1] != 0 || winningsMultiplier[1] != 0 || winningsMultiplier[1] != 0 {
-            alertWinnings(winningsMultiplier[1], threeOfAKindWinCount: winningsMultiplier[2], straighWinCount: winningsMultiplier[3])
         }
-        credits += winnings
-        currentBet = 0
-        
-        
-        updateMainView()
+         updateMainView()
     }
     
     
@@ -325,17 +331,5 @@ class ViewController: UIViewController {
         //to pa zato da se dejansko predstavi
         
     }
-    
-    //Helper Function
-    func alertWinnings(flushCount: Int, threeOfAKindWinCount: Int, straighWinCount: Int) {
-        
-        let message = "Flush: \(flushCount), Three in a row: \(threeOfAKindWinCount), Three of a Kind: \(straighWinCount)"
-        let alertController = UIAlertController(title: "Winnings", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-        alertController.addAction(alertAction)
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
-    }
-
 }
 
